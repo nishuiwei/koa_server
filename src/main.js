@@ -1,6 +1,7 @@
-const Koa = require('koa')
-const app = new Koa()
+const app = require('./app/index')
 
-app.listen(8888, () => {
-	console.log(`server start: http://localhost:8888`)
+const { APP_PORT } = require('./app/config')
+
+app.listen(APP_PORT, () => {
+	console.log(`server start: http://localhost:${APP_PORT}`)
 })
