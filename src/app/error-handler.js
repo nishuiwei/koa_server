@@ -8,6 +8,11 @@ const errorHandler = (error, ctx) => {
 			message = '用户名或者密码不能为空'
 			break
 
+		case errorType.USER_ALREADY_EXISTS:
+			status = 409
+			message = '用户名已存在'
+			break
+
 		default:
 			status = 404
 			message = 'NOT FOUND'
