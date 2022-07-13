@@ -1,4 +1,8 @@
-const { create, getMomentById } = require('../service/moment.service')
+const {
+	create,
+	getMomentById,
+	getMomentList,
+} = require('../service/moment.service')
 
 class MonentController {
 	async create(ctx, next) {
@@ -12,6 +16,16 @@ class MonentController {
 		const { momentId } = ctx.params
 		// 2. 根据 id 去查询数据
 		const result = await getMomentById(momentId)
+
+		ctx.body = result
+	}
+
+	async list(ctx, next) {
+		// 1. 获取数据
+		const { offset, size } = ctx.query
+
+		// 2. 查询数据
+		const result = await getMomentList(offset, size)
 
 		ctx.body = result
 	}
