@@ -2,6 +2,7 @@ const {
 	create,
 	getMomentById,
 	getMomentList,
+	update,
 } = require('../service/moment.service')
 
 class MonentController {
@@ -26,6 +27,14 @@ class MonentController {
 
 		// 2. 查询数据
 		const result = await getMomentList(offset, size)
+
+		ctx.body = result
+	}
+	async update(ctx, next) {
+		const { momentId } = ctx.params
+		const { content } = ctx.request.body
+
+		const result = await update(content, momentId)
 
 		ctx.body = result
 	}
