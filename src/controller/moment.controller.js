@@ -3,6 +3,7 @@ const {
 	getMomentById,
 	getMomentList,
 	update,
+	remove,
 } = require('../service/moment.service')
 
 class MonentController {
@@ -35,6 +36,14 @@ class MonentController {
 		const { content } = ctx.request.body
 
 		const result = await update(content, momentId)
+
+		ctx.body = result
+	}
+
+	async remove(ctx, next) {
+		const { momentId } = ctx.params
+
+		const result = await remove(momentId)
 
 		ctx.body = result
 	}
