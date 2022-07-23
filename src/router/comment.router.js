@@ -1,9 +1,13 @@
 const Router = require('koa-router')
 const commentRouter = new Router({ prefix: '/comment' })
-const { create, reply } = require('../controller/comment.controller')
-const { verifyAuth } = require('../middleware/auth.middleware')
+const { create, reply, update } = require('../controller/comment.controller')
+const {
+	verifyAuth,
+	verifyPermission,
+} = require('../middleware/auth.middleware')
 
 commentRouter.post('/', verifyAuth, create)
 commentRouter.post('/:commentId/reply', verifyAuth, reply)
+commentRouter.patch('/:commentId', verifyAuth, update)
 
 module.exports = commentRouter

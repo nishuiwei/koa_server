@@ -1,4 +1,4 @@
-const { create, reply } = require('./../service/comment.service.js')
+const { create, reply, update } = require('./../service/comment.service.js')
 
 class CommentController {
 	async create(ctx, next) {
@@ -13,6 +13,13 @@ class CommentController {
 		const { commentId } = ctx.params
 		const { id } = ctx.user
 		const result = await reply(content, momentId, id, commentId)
+		ctx.body = result
+	}
+
+	async update(ctx, next) {
+		const { content } = ctx.request.body
+		const { commentId } = ctx.params
+		const result = await update(content, commentId)
 		ctx.body = result
 	}
 }
