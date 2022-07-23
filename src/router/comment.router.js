@@ -8,6 +8,6 @@ const {
 
 commentRouter.post('/', verifyAuth, create)
 commentRouter.post('/:commentId/reply', verifyAuth, reply)
-commentRouter.patch('/:commentId', verifyAuth, update)
+commentRouter.patch('/:commentId', verifyAuth, verifyPermission, update)
 
 module.exports = commentRouter

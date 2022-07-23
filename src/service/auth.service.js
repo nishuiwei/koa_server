@@ -1,10 +1,10 @@
 const connections = require('./../app/database')
 
 class AuthService {
-	async checkMoment(momentId, userId) {
-		const statement = `SELECT * FROM moments WHERE id = ? AND user_id = ?;`
+	async checkResource(tableName, id, userId) {
+		const statement = `SELECT * FROM ${tableName} WHERE id = ? AND user_id = ?;`
 
-		const [result] = await connections.execute(statement, [momentId, userId])
+		const [result] = await connections.execute(statement, [id, userId])
 		return result[0]
 	}
 }

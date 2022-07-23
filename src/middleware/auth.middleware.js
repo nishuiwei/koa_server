@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const errorType = require('../constants/error-types')
-const { checkMoment } = require('../service/auth.service')
+const { checkResource } = require('../service/auth.service')
 const { getUserByName } = require('../service/user.service')
 const md5password = require('../utils/password-handle')
 const { PUBLIC_KEY } = require('./../app/config')
@@ -47,7 +47,6 @@ const verifyAuth = async (ctx, next) => {
 		ctx.user = result
 		await next()
 	} catch (err) {
-		console.log(err)
 		const error = new Error(errorType.UNAUTHORIZATION)
 		ctx.app.emit('error', error, ctx)
 	}
@@ -55,11 +54,12 @@ const verifyAuth = async (ctx, next) => {
 
 const verifyPermission = async (ctx, next) => {
 	console.log('验证权限的middleware')
-	const { momentId } = ctx.params
+	const [resourseKey] = Object.keys(ctx.params)
+	const tableName = resourseKey.replace('Id', 's')
+	const resourseId = ctx.params[resourseKey]
 	const { id } = ctx.user
-
 	try {
-		const isPermission = await checkMoment(momentId, id)
+		const isPermission = await checkResource(tableName, resourseId, id)
 		if (!isPermission) throw new Error(errorType.UNPERMISSION)
 		await next()
 	} catch (err) {
